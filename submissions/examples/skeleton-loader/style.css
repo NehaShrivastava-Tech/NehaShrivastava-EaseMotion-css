@@ -1,185 +1,259 @@
-@import url('https://cdn.jsdelivr.net/npm/easemotion-css@latest/dist/easemotion.min.css');
+/* ============================================================
+   EaseMotion CSS — Animated Skeleton Loader Collection
+   submissions/examples/skeleton-loader/style.css
+   ============================================================ */
 
-* {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
+:root {
+  --ease-skeleton-base:       #e2e8f0;
+  --ease-skeleton-highlight:  #f8fafc;
+  --ease-skeleton-radius:     6px;
+  --ease-skeleton-duration:   1.5s;
+  --ease-skeleton-pulse-duration: 1.8s;
+
+  /* Card / page chrome */
+  --ease-card-bg:             #ffffff;
+  --ease-card-border:         #e2e8f0;
+  --ease-card-shadow:         0 2px 12px rgba(0,0,0,0.06);
+  --ease-card-radius:         12px;
+
+  --ease-text:                #1e293b;
+  --ease-subtext:             #64748b;
+  --page-bg:                  #f1f5f9;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ease-skeleton-base:      #1e293b;
+    --ease-skeleton-highlight: #334155;
+    --ease-card-bg:            #0f172a;
+    --ease-card-border:        #1e293b;
+    --ease-card-shadow:        0 2px 12px rgba(0,0,0,0.4);
+    --ease-text:               #f1f5f9;
+    --ease-subtext:            #94a3b8;
+    --page-bg:                 #020617;
+  }
+}
+
+/* ── Page shell ──────────────────────────────────────────── */
 body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: #f8fafc;
-  color: #0f172a;
-  padding: 48px 32px;
-  line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--page-bg);
+  color: var(--ease-text);
+  min-height: 100vh;
+  padding: 2.5rem 1rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
 }
 
-.container {
-  max-width: 720px;
-  margin: 0 auto;
-}
-
-h1 {
-  font-size: 2rem;
-  font-weight: 800;
-  margin-bottom: 4px;
-}
-
-.subtitle {
-  color: #64748b;
-  margin-bottom: 40px;
+.demo-label {
+  font-size: 0.75rem;
+  color: var(--ease-subtext);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
 .section-title {
-  font-size: 1.25rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  margin: 40px 0 16px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid #e2e8f0;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ease-subtext);
+  margin-bottom: 0.75rem;
+}
+
+.demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 900px;
 }
 
 .demo-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 24px;
-  margin-bottom: 24px;
+  background: var(--ease-card-bg);
+  border: 1px solid var(--ease-card-border);
+  border-radius: var(--ease-card-radius);
+  box-shadow: var(--ease-card-shadow);
+  padding: 1.25rem;
 }
 
-.demo-card h3 {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #64748b;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 16px;
-}
+/* ════════════════════════════════════════════════════════════
+   SHIMMER VARIANT
+   A gradient band sweeps left-to-right on a loop.
+   Uses background-size + background-position — GPU-friendly.
+   ════════════════════════════════════════════════════════════ */
 
-@keyframes ease-kf-shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-.skeleton-shimmer {
+.ease-skeleton {
   background: linear-gradient(
     90deg,
-    rgba(226, 232, 240, 0.6) 25%,
-    rgba(203, 213, 225, 0.9) 37%,
-    rgba(226, 232, 240, 0.6) 63%
+    var(--ease-skeleton-base)      0%,
+    var(--ease-skeleton-base)      30%,
+    var(--ease-skeleton-highlight) 50%,
+    var(--ease-skeleton-base)      70%,
+    var(--ease-skeleton-base)      100%
   );
-  background-size: 400% 100%;
-  animation: ease-kf-shimmer 1.8s ease-in-out infinite;
-  pointer-events: none;
-  user-select: none;
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  border-radius: var(--ease-skeleton-radius);
+  animation: ease-shimmer var(--ease-skeleton-duration) linear infinite;
 }
 
-.skeleton-line {
+@keyframes ease-shimmer {
+  0%   { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+/* ── Text line ───────────────────────────────────────────── */
+.ease-skeleton-text {
   height: 14px;
-  border-radius: 6px;
-  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 10px;
 }
 
-.skeleton-line-sm {
-  width: 60%;
+.ease-skeleton-text:last-child {
+  margin-bottom: 0;
+  width: 70%;   /* shorter last line — natural paragraph feel */
 }
 
-.skeleton-line-lg {
-  width: 85%;
-}
-
-.skeleton-avatar {
-  width: 48px;
-  height: 48px;
+/* ── Avatar (circle) ─────────────────────────────────────── */
+.ease-skeleton-avatar {
   border-radius: 50%;
   flex-shrink: 0;
 }
 
-.skeleton-avatar-sm {
-  width: 32px;
-  height: 32px;
-}
+.ease-skeleton-avatar-sm { width: 32px;  height: 32px; }
+.ease-skeleton-avatar-md { width: 48px;  height: 48px; }
+.ease-skeleton-avatar-lg { width: 64px;  height: 64px; }
 
-.skeleton-avatar-lg {
-  width: 64px;
-  height: 64px;
-}
-
-.skeleton-card {
-  height: 160px;
-  border-radius: 12px;
-}
-
-.skeleton-card-sm {
-  height: 100px;
-}
-
-.skeleton-block {
-  height: 40px;
+/* ── Image block (rectangle) ─────────────────────────────── */
+.ease-skeleton-image {
+  width: 100%;
   border-radius: 8px;
 }
 
-@media (prefers-color-scheme: dark) {
-  body {
-    background: #0f172a;
-    color: #f1f5f9;
-  }
+.ease-skeleton-image-sm  { height: 80px; }
+.ease-skeleton-image-md  { height: 140px; }
+.ease-skeleton-image-lg  { height: 200px; }
 
-  .demo-card {
-    background: #1e293b;
-    border-color: #334155;
-  }
-
-  .demo-card h3 {
-    color: #94a3b8;
-  }
-
-  .section-title {
-    border-bottom-color: #334155;
-  }
-
-  .subtitle {
-    color: #64748b;
-  }
-
-  .skeleton-shimmer {
-    background: linear-gradient(
-      90deg,
-      rgba(51, 65, 85, 0.6) 25%,
-      rgba(71, 85, 105, 0.9) 37%,
-      rgba(51, 65, 85, 0.6) 63%
-    );
-    background-size: 400% 100%;
-  }
+/* ── Button placeholder ──────────────────────────────────── */
+.ease-skeleton-btn {
+  height: 36px;
+  border-radius: 8px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .skeleton-shimmer {
-    animation: none;
-  }
+/* ── Badge placeholder ───────────────────────────────────── */
+.ease-skeleton-badge {
+  height: 20px;
+  width: 60px;
+  border-radius: 999px;
 }
 
-/* ── Layout helpers for demo ─────────────────────────────── */
+/* ════════════════════════════════════════════════════════════
+   PULSE VARIANT
+   Fades opacity in and out — lighter alternative to shimmer.
+   ════════════════════════════════════════════════════════════ */
 
-.skeleton-profile {
+.ease-skeleton-pulse {
+  background: var(--ease-skeleton-base);
+  border-radius: var(--ease-skeleton-radius);
+  animation: ease-pulse var(--ease-skeleton-pulse-duration) ease-in-out infinite;
+}
+
+@keyframes ease-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ── Stagger pulse delays for natural feel ───────────────── */
+.ease-skeleton-pulse:nth-child(2) { animation-delay: 150ms; }
+.ease-skeleton-pulse:nth-child(3) { animation-delay: 300ms; }
+.ease-skeleton-pulse:nth-child(4) { animation-delay: 450ms; }
+.ease-skeleton-pulse:nth-child(5) { animation-delay: 600ms; }
+
+/* ════════════════════════════════════════════════════════════
+   COMPOSITE SHAPES — card, list-item, profile, media
+   ════════════════════════════════════════════════════════════ */
+
+/* Card skeleton layout */
+.ease-skeleton-card {
   display: flex;
-  gap: 16px;
-  align-items: center;
-  margin-bottom: 16px;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.skeleton-profile-info {
+/* List-item row: avatar + lines */
+.ease-skeleton-list-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ease-skeleton-list-item-body {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.skeleton-article {
+/* Profile header: large avatar + title + badge */
+.ease-skeleton-profile {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.ease-skeleton-profile-body {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
+}
+
+/* Media row: thumbnail + text */
+.ease-skeleton-media {
+  display: flex;
+  gap: 12px;
+}
+
+.ease-skeleton-media-thumb {
+  width: 80px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: 6px;
+}
+
+.ease-skeleton-media-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+}
+
+/* ── Width utility helpers ───────────────────────────────── */
+.w-full  { width: 100%; }
+.w-3\/4  { width: 75%; }
+.w-1\/2  { width: 50%; }
+.w-1\/3  { width: 33%; }
+.w-1\/4  { width: 25%; }
+
+/* ── Reduced motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .ease-skeleton,
+  .ease-skeleton-pulse {
+    animation: none;
+    background: var(--ease-skeleton-base);
+    opacity: 1;
+  }
 }
